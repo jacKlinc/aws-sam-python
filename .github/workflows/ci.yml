@@ -35,6 +35,7 @@ jobs:
     if: github.event_name == 'pull_request'  # Only run integration tests on PR merges
     env:
       AWS_SAM_STACK_NAME: ${{ vars.AWS_SAM_STACK_NAME }}
+      REGION: ${{ vars.REGION }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -54,11 +55,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+          aws-region: $REGION
 
       - name: Deploy SAM application
         run: |
-          sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-confirm-changeset --capabilities CAPABILITY_IAM
+          sam deploy --stack-name $AWS_SAM_STACK_NAME --no-confirm-changeset --capabilities CAPABILITY_IAM
 
       - name: Run integration tests
         run: |
@@ -67,4 +68,4 @@ jobs:
       - name: Teardown SAM application
         if: always()
         run: |
-          sam delete --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-prompts
+          sam delete --stack-name $AWS_SAM_STACK_NAME --no-prompts
