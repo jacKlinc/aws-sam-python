@@ -68,3 +68,36 @@ jobs:
         if: always()
         run: |
           sam delete --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-prompts
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'  # Only deploy on push to main
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r hello_world/requirements.txt
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy SAM application to Production
+        run: |
+          echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to region ${{ vars.AWS_REGION }}"
+          sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-confirm-changeset --capabilities CAPABILITY_IAM
+
+      - name: Notify deployment success
+        run: |
+          echo "Deployment of stack ${{ vars.AWS_SAM_STACK_NAME }} was successful!"
