@@ -54,6 +54,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.REGION }}
 
+      - name: Deploy SAM application
+        run: |
+          sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-confirm-changeset --capabilities CAPABILITY_IAM
+
       - name: Run integration tests
         run: |
           python -m pytest tests/integration
+
+      - name: Teardown SAM application
+        if: always()
+        run: |
+          sam delete --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-prompts
