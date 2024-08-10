@@ -56,14 +56,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.REGION }}
 
-      - name: Deploy SAM application
-        run: |
-          sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-confirm-changeset --capabilities CAPABILITY_IAM
-
-      - name: Sleep for 3 minutes
-        run: sleep 180s
-        shell: bash
-
       - name: Run integration tests
         run: |
           python -m pytest tests/integration
