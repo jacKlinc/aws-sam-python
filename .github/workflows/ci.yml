@@ -91,11 +91,11 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ vars.REGION }}
 
       - name: Deploy SAM application to Production
         run: |
-          echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to region ${{ vars.AWS_REGION }}"
+          echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to region ${{ vars.REGION }}"
           sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-confirm-changeset --capabilities CAPABILITY_IAM
 
       - name: Notify deployment success
