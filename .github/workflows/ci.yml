@@ -33,8 +33,6 @@ jobs:
   integration-tests:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'  # Only run integration tests on PR merges
-    env:
-      AWS_SAM_STACK_NAME: ${{ vars.AWS_SAM_STACK_NAME }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -58,7 +56,7 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --stack-name $AWS_SAM_STACK_NAME --no-confirm-changeset --capabilities CAPABILITY_IAM
+          sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-confirm-changeset --capabilities CAPABILITY_IAM
 
       - name: Run integration tests
         run: |
@@ -67,4 +65,4 @@ jobs:
       - name: Teardown SAM application
         if: always()
         run: |
-          sam delete --stack-name $AWS_SAM_STACK_NAME --no-prompts
+          sam delete --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-prompts
