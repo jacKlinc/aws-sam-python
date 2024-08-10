@@ -14,6 +14,7 @@ class TestApiGateway:
     def api_gateway_url(self):
         """Get the API Gateway URL from Cloudformation Stack outputs"""
         stack_name = os.environ.get("AWS_SAM_STACK_NAME")
+        env = os.environ.get("ENV")
 
         if stack_name is None:
             raise ValueError(
@@ -22,6 +23,7 @@ class TestApiGateway:
 
         client = boto3.client("cloudformation")
 
+        stack_name = f"{stack_name}-{env}"
         try:
             response = client.describe_stacks(StackName=stack_name)
         except Exception as e:

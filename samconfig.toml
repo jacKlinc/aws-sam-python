@@ -14,12 +14,34 @@ parallel = true
 lint = true
 
 [default.deploy.parameters]
+stack_name = "sam-app-dev"
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = true
 resolve_s3 = true
-s3_prefix = "sam-app"
+s3_prefix = "sam-app-dev"
 region = "eu-central-1"
 image_repositories = []
+parameter_overrides = "Environment=dev"
+
+[staging.deploy.parameters]
+stack_name = "sam-app-staging"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+s3_prefix = "sam-app-staging"
+region = "eu-central-1"
+image_repositories = []
+parameter_overrides = "Environment=staging"
+
+[prod.deploy.parameters]
+stack_name = "sam-app-prod"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+s3_prefix = "sam-app-prod"
+region = "eu-central-1"
+image_repositories = []
+parameter_overrides = "Environment=prod"
 
 [default.package.parameters]
 resolve_s3 = true
