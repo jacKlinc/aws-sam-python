@@ -67,8 +67,3 @@ jobs:
       - name: Run integration tests
         run: |
           python -m pytest tests/integration
-
-      - name: Teardown SAM application
-        if: always()
-        run: |
-          sam delete --stack-name ${{ vars.AWS_SAM_STACK_NAME }} --no-prompts
