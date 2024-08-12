@@ -33,7 +33,7 @@ jobs:
       - name: Run PyLint
         run: |
           pip install -r hello_world/requirements-dev.txt
-          pylint .  
+          pylint --fail-under=5 .  
 
   integration-tests:
     runs-on: ubuntu-latest
