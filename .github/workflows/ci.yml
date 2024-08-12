@@ -32,7 +32,7 @@ jobs:
       
       - name: Run PyLint
         run: |
-          pip install -r requirements-dev.txt
+          pip install -r hello_world/requirements-dev.txt
           pylint .  
 
   integration-tests:
