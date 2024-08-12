@@ -63,6 +63,7 @@ def apigw_event():
 
 
 def test_lambda_handler(apigw_event):
+    """Locally tests Lambda input"""
     ret = app.lambda_handler(apigw_event, "")
     data = json.loads(ret["body"])
 

@@ -4,12 +4,10 @@ import boto3
 import pytest
 import requests
 
-"""
-Make sure env variable AWS_SAM_STACK_NAME exists with the name of the stack we are going to test. 
-"""
-
 
 class TestApiGateway:
+    """Tests API Gateway endpoint"""
+
     @pytest.fixture()
     def api_gateway_url(self):
         """Get the API Gateway URL from Cloudformation Stack outputs"""
@@ -27,7 +25,7 @@ class TestApiGateway:
         try:
             response = client.describe_stacks(StackName=stack_name)
         except Exception as e:
-            raise Exception(
+            raise ReferenceError(
                 f"Cannot find stack {stack_name} \n"
                 f'Please make sure a stack with the name "{stack_name}" exists'
             ) from e
@@ -45,7 +43,7 @@ class TestApiGateway:
 
     def test_api_gateway(self, api_gateway_url):
         """Call the API Gateway endpoint and check the response"""
-        response = requests.get(api_gateway_url)
+        response = requests.get(api_gateway_url, timeout=2)
 
         assert response.status_code == 200
         assert response.json() == {"message": "hello world"}

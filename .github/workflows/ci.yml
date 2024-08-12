@@ -29,6 +29,11 @@ jobs:
       - name: Run unit tests
         run: |
           python -m pytest tests/unit
+      
+      - name: Run PyLint
+        run: |
+          pip install -r hello_world/requirements-dev.txt
+          pylint --fail-under=5 .  
 
   integration-tests:
     runs-on: ubuntu-latest
