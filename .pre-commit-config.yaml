@@ -1,0 +1,11 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 23.3.0  # Use the latest stable version of black
+    hooks:
+      - id: black
+        name: Black Python code formatter
+        language_version: python3.9
+        entry: black
+        args: [--line-length=88]  # Adjust line length as needed
+        files: \.py$
+        types: [python]
