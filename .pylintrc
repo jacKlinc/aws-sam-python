@@ -118,7 +118,7 @@ unsafe-load-any-extension=no
 
 
 [MASTER]
-disable=C0114 # missing-module-docstring
+disable=C0114, C0103  # missing-module-docstring, invalid-name module
 
 [BASIC]
 
