@@ -1,4 +1,5 @@
 [MAIN]
+max-line-length=88
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists
@@ -115,6 +116,9 @@ unsafe-load-any-extension=no
 # In verbose mode, extra non-checker-related info will be displayed.
 #verbose=
 
+
+[MASTER]
+disable=C0114 # missing-module-docstring
 
 [BASIC]
 
