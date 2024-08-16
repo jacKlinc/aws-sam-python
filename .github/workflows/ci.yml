@@ -99,6 +99,12 @@ jobs:
           echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to region ${{ vars.REGION }}"
           sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }}-prod --no-confirm-changeset --capabilities CAPABILITY_IAM --config-env prod
 
-      - name: Notify deployment success
+      - name: Deploy MKDocs
+        run: |
+          echo "Deploying MKDocs pages"
+          pip install -r hello_world/requirements-dev.txt
+          mkdocs gh-deploy
+
+      - name: Notify production deployment success
         run: |
           echo "Deployment of stack ${{ vars.AWS_SAM_STACK_NAME }} was successful!"
