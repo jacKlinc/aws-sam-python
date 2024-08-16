@@ -1,0 +1,4 @@
+black==23.12.1
+pre-commit==3.8.0
+pylint==3.2.6
+mkdocstrings==0.25.2
