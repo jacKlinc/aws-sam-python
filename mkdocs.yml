@@ -30,6 +30,12 @@ theme:
 nav:
   - Home: index.md
   - About: about.md
+  - Reference: reference.md
 
 plugins:
   - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [hello_world]
