@@ -30,6 +30,9 @@ jobs:
       - name: Run unit tests
         run: |
           python -m pytest tests/unit
+
+      - name: Fix MKDocs handler error
+        run: pip install 'mkdocstrings[python]'
       
       - name: Run PyLint
         run: |
