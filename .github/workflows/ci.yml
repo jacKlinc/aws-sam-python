@@ -144,6 +144,7 @@ jobs:
       - name: Deploy MKDocs
         run: |
           echo "Deploying MKDocs pages"
+          pip install -r hello_world/requirements-dev.txt
           mkdocs gh-deploy
 
       - name: Notify production deployment success
