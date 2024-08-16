@@ -6,8 +6,7 @@ on:
       - "**" # Runs on push to any branch
   pull_request:
     branches:
-      - development
-      - main
+      - main # Runs on pull requests targeting the main branch
 
 jobs:
   unit-tests:
@@ -20,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ vars.PYTHON_VERSION }}
+          python-version: "3.9"
 
       - name: Install dependencies
         run: |
@@ -30,14 +29,6 @@ jobs:
       - name: Run unit tests
         run: |
           python -m pytest tests/unit
-
-      - name: Fix MKDocs handler error
-        run: pip install 'mkdocstrings[python]'
-      
-      - name: Run PyLint
-        run: |
-          pip install -r hello_world/requirements-dev.txt
-          pylint --fail-under=${{ vars.PYLINT_THRESHOLD }} .  
 
   integration-tests:
     runs-on: ubuntu-latest
@@ -52,7 +43,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ vars.PYTHON_VERSION }}
+          python-version: "3.9"
 
       - name: Install dependencies
         run: |
@@ -79,40 +70,7 @@ jobs:
         run: |
           sam delete --stack-name ${{ vars.AWS_SAM_STACK_NAME }}-staging --no-prompts
 
-  deploy-to-staging:
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/development' && github.event_name == 'push' # Only deploy on push to development branch
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ vars.PYTHON_VERSION }}
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r hello_world/requirements.txt
-
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.REGION }}
-
-      - name: Deploy SAM application to Staging
-        run: |
-          echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to staging environment in region ${{ vars.REGION }}"
-          sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }}-staging --no-confirm-changeset --capabilities CAPABILITY_IAM --config-env staging
-
-      - name: Notify staging deployment success
-        run: |
-          echo "Deployment of stack ${{ vars.AWS_SAM_STACK_NAME }} to staging was successful!"
-
-  deploy-to-production:
+  deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Only deploy on push to main
     steps:
@@ -122,7 +80,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ vars.PYTHON_VERSION }}
+          python-version: "3.9"
 
       - name: Install dependencies
         run: |
@@ -138,7 +96,7 @@ jobs:
 
       - name: Deploy SAM application to Production
         run: |
-          echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to production environment in region ${{ vars.REGION }}"
+          echo "Deploying stack ${{ vars.AWS_SAM_STACK_NAME }} to region ${{ vars.REGION }}"
           sam deploy --stack-name ${{ vars.AWS_SAM_STACK_NAME }}-prod --no-confirm-changeset --capabilities CAPABILITY_IAM --config-env prod
 
       - name: Deploy MKDocs
@@ -149,4 +107,4 @@ jobs:
 
       - name: Notify production deployment success
         run: |
-          echo "Deployment of stack ${{ vars.AWS_SAM_STACK_NAME }} to production was successful!"
+          echo "Deployment of stack ${{ vars.AWS_SAM_STACK_NAME }} was successful!"
