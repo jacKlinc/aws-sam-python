@@ -450,8 +450,7 @@
 <h3 id="app.lambda_handler--parameters">Parameters</h3>
 <p>event: dict, required
     API Gateway Lambda Proxy Input Format</p>
-<pre><code>Event doc:
-https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
+<pre><code>Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
 </code></pre>
 
 
@@ -461,8 +460,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy
 <p>Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html</p>
 </details>      <h3 id="app.lambda_handler--returns">Returns</h3>
 <p>API Gateway Lambda Proxy Output Format: dict</p>
-<pre><code>Return doc:
-https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
+<pre><code>Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
 </code></pre>
 
             <details class="quote">
@@ -495,9 +493,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+<span class="normal">32</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sample pure Lambda function</span>
 
 <span class="sd">    Parameters</span>
@@ -505,8 +501,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy
 <span class="sd">    event: dict, required</span>
 <span class="sd">        API Gateway Lambda Proxy Input Format</span>
 
-<span class="sd">        Event doc:</span>
-<span class="sd">        https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format</span>
+<span class="sd">        Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format</span>
 
 <span class="sd">    context: object, required</span>
 <span class="sd">        Lambda Context runtime methods and attributes</span>
@@ -517,8 +512,7 @@ https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy
 <span class="sd">    ------</span>
 <span class="sd">    API Gateway Lambda Proxy Output Format: dict</span>
 
-<span class="sd">        Return doc:</span>
-<span class="sd">        https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html</span>
+<span class="sd">        Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;statusCode&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
